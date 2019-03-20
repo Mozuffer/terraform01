@@ -31,7 +31,7 @@ resource "aws_security_group" "vpc_security_group" {
     ]
 
     from_port = 80
-    protocol  = "http"
+    protocol  = "tcp"
     to_port   = 80
   }
 
