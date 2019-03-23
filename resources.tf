@@ -22,6 +22,31 @@ resource "aws_subnet" "subnet2" {
   availability_zone       = "${data.aws_availability_zones.av_zone.names[1]}"
 }
 
+resource "aws_s3_bucket" "my_bucket" {
+  bucket = "mozufferfirstbacket"
+}
+
+resource "aws_iam_policy" "my_bucket_policy" {
+  name = "my-first-bucket-policy"
+
+  policy = <<POLICY
+{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+         "Action": [
+            "s3:ListAllMyBuckets"
+         ],
+         "Effect": "Allow",
+         "Resource": [
+            "${aws_s3_bucket.my_bucket.arn}"
+         ]
+       }
+    ]
+  }
+POLICY
+}
+
 resource "aws_security_group" "vpc_security_group" {
   vpc_id = "${aws_vpc.vpc.id}"
 
